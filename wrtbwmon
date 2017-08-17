@@ -257,7 +257,7 @@ $PEAKUSAGE_IN,$PEAKUSAGE_OUT,$TOTAL,\"$FIRSTSEEN\",\"$LASTSEEN\")," >> $3.tmp
 	# query DB
 	lock
 	
-	grep -v '^#' $DB | awk -F, '{SUM+=$6}; END { printf("Total: %i Gigabytes\n",SUM/1e9)}'
+        awk -F, '!/^($|[:space:]*#)/{SUM+=$6}; END { printf("Total %i Gigabytes\n",SUM/1e9)}' /tmp/usage.db	
 	
 	unlock
 	
