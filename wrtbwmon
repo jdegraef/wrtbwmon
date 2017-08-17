@@ -251,6 +251,19 @@ $PEAKUSAGE_IN,$PEAKUSAGE_OUT,$TOTAL,\"$FIRSTSEEN\",\"$LASTSEEN\")," >> $3.tmp
 	rm -f /tmp/*_$$.tmp
 	;;
     
+    "publishtotal" )
+	checkDbArg
+	
+	# query DB
+	lock
+	
+	grep -v '^#' $DB | awk -F, '{SUM+=$6}; END { printf("Total: %i Gigabytes\n",SUM/1e9)}'
+	
+	unlock
+	
+	;;
+
+
     "setup" )
 	checkDbArg
 	[ -w "$DB" ] && echo "Warning: using existing $DB"
